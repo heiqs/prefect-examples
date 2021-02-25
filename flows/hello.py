@@ -10,7 +10,7 @@ with Flow("hello-flow-git") as flow:
     say_hello()
 
 flow.storage = GitHub(
-    repo=' heiqs/prefect-examples',
+    repo='heiqs/prefect-examples',
     path="flows/hello.py",
     ref='main'
 )
