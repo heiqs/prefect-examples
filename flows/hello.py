@@ -11,6 +11,6 @@ with Flow("hello-flow-git") as flow:
 
 flow.storage = GitHub(
     repo=' heiqs/prefect-examples',
-    path="flows/flow.py",
+    path="flows/hello.py",
     ref='main'
 )
