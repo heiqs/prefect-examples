@@ -22,8 +22,8 @@ def read_csv(bucket_name: str, object_key: str):
     body = csv_obj['Body']
     csv_string = body.read().decode('utf-8')
     df = pd.read_csv(StringIO(csv_string))
-    logger = prefect.context.get("logger")
-    logger.info(df.head(5))
+    # logger = prefect.context.get("logger")
+    # logger.info(df.head(5))
     return df.head(5)
 
 
@@ -39,6 +39,3 @@ def write_csv(df, bucket_name: str, outfile: str):
 with Flow('s3_read') as flow:
     df = read_csv('testmydask', 'data.csv')
     write_csv(df, 'testmydask', 'data-head.csv')
-
-
-flow.run()
