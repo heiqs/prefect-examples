@@ -22,20 +22,20 @@ def read_csv(bucket_name: str, object_key: str):
     body = csv_obj['Body']
     csv_string = body.read().decode('utf-8')
     df = pd.read_csv(StringIO(csv_string))
-    # logger = prefect.context.get("logger")
-    # logger.info(df.head(5))
+    logger = prefect.context.get("logger")
+    logger.info(df.head(5))
     return df.head(5)
 
 
-@task
-def write_csv(df, bucket_name: str, outfile: str):
-    csv_buffer = StringIO()
-    df.to_csv(csv_buffer)
+# @task
+# def write_csv(df, bucket_name: str, outfile: str):
+#     csv_buffer = StringIO()
+#     df.to_csv(csv_buffer)
 
-    s3_resource = boto3.resource('s3')
-    s3_resource.Object(bucket_name, outfile).put(Body=csv_buffer.getvalue())
+#     s3_resource = boto3.resource('s3')
+#     s3_resource.Object(bucket_name, outfile).put(Body=csv_buffer.getvalue())
 
 
 with Flow('s3_read') as flow:
     df = read_csv('testmydask', 'data.csv')
-    write_csv(df, 'testmydask', 'data-head.csv')
+#     write_csv(df, 'testmydask', 'data-head.csv')
