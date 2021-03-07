@@ -4,8 +4,8 @@ import pandas as pd
 from io import StringIO
 from prefect import task, Flow, context
 
-aws_id = os.environ['AWS_ACCESS_KEY_ID']
-aws_secret = os.environ['AWS_SECRET_ACCESS_KEY']
+aws_id = os.getenv('AWS_ACCESS_KEY_ID')
+aws_secret = os.getenv('AWS_SECRET_ACCESS_KEY')
 
 client = boto3.client(
     's3',
@@ -37,3 +37,6 @@ def write_csv(df, bucket_name: str, outfile: str):
 with Flow('s3_read') as flow:
     df = read_csv('testmydask', 'data.csv')
     write_csv(df, 'testmydask', 'data-head.csv')
+
+
+flow.run()
