@@ -2,7 +2,9 @@ import os
 import boto3
 import pandas as pd
 from io import StringIO
-from prefect import task, Flow, context
+from prefect import task, Flow
+import prefect
+
 
 aws_id = os.getenv('AWS_ACCESS_KEY_ID')
 aws_secret = os.getenv('AWS_SECRET_ACCESS_KEY')
@@ -20,7 +22,7 @@ def read_csv(bucket_name: str, object_key: str):
     body = csv_obj['Body']
     csv_string = body.read().decode('utf-8')
     df = pd.read_csv(StringIO(csv_string))
-    logger = context.get("logger")
+    logger = prefect.context.get("logger")
     logger.info(df.head(5))
     return df.head(5)
 
