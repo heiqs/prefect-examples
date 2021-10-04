@@ -4,7 +4,7 @@ import os
 import time
 
 @task
-def say_hello():
+def say_hello(log_stdout=True):
     logger = prefect.context.get("logger")
     logger.info(f"Hello, {os.getenv('username')}!")
     print('This is an updated version!')
